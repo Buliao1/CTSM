@@ -22,7 +22,7 @@ module SnowHydrologyMod
   use abortutils      , only : endrun
   use clm_varpar      , only : nlevsno
   use clm_varctl      , only : iulog
-  use clm_varcon      , only : namec, h2osno_max
+  use clm_varcon      , only : namec, h2osno_max, zsno
   use atm2lndType     , only : atm2lnd_type
   use AerosolMod      , only : aerosol_type
   use TemperatureType , only : temperature_type
@@ -110,6 +110,7 @@ module SnowHydrologyMod
   real(r8) :: upplim_destruct_metamorph   = 100.0_r8           ! Upper Limit on Destructive Metamorphism Compaction [kg/m3]
   real(r8) :: overburden_compress_Tfactor = 0.08_r8            ! snow compaction overburden exponential factor (1/K)
   real(r8) :: min_wind_snowcompact        = 5._r8              ! minimum wind speed tht results in compaction (m/s)
+  real(r8) :: zsno_nl                     = 0.0024_r8          ! roughness length for snow from namelist[m]
 
   ! ------------------------------------------------------------------------
   ! Parameters controlling the resetting of the snow pack
@@ -169,7 +170,7 @@ contains
          wind_dependent_snow_density, snow_overburden_compaction_method, &
          lotmp_snowdensity_method, upplim_destruct_metamorph, &
          overburden_compress_Tfactor, min_wind_snowcompact, &
-         reset_snow, reset_snow_glc, reset_snow_glc_ela
+         reset_snow, reset_snow_glc, reset_snow_glc_ela, zsno_nl
 
     ! Initialize options to default values, in case they are not specified in the namelist
     wind_dependent_snow_density = .false.
@@ -224,7 +225,8 @@ contains
        call endrun(msg="ERROR bad snow_overburden_compaction_method name"// &
             errMsg(sourcefile, __LINE__))
     end if
-
+  
+  zsno=zsno_nl  
   end subroutine SnowHydrology_readnl
 
 
