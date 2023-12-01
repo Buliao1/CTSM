@@ -27,7 +27,7 @@ my $pkg_nm = 'config_files::clm_phys_vers';
 #--------------------------------------------------------------------------------------------
 
 use strict;
-use bigint;
+#use bigint;
 #use warnings;
 #use diagnostics;
 
@@ -103,8 +103,8 @@ sub as_float {
   my $minor = int(($long - $major*$major_mask)/ $minor_mask);
   my $rev   =  $long - $major*$major_mask - $minor*$minor_mask;
   {
-     no  bigint;
-     use bignum;
+	  # no  bigint;
+	  # use bignum;
 
      my $phys  = $major*1.0 + $minor/10.0   + $rev / 10000.0;
      return( $phys );
@@ -176,11 +176,11 @@ if ( ! defined(caller) && $#ARGV == -1 ) {
       my $phys = config_files::clm_phys_vers->new("clm4_0");
       is( 4.0, $phys->as_float(), "Make sure clm4_0 correct float value" );
       $phys = config_files::clm_phys_vers->new("clm4_5");
-      no  bigint;
-      use bignum;
+      #      no  bigint;
+      #      use bignum;
       is( 4.5, $phys->as_float(), "Make sure clm4_5 correct float value" );
-      no bignum;
-      use bigint;
+      #      no bignum;
+      #      use bigint;
       $phys = config_files::clm_phys_vers->new("clm5_0");
       is( 5.0, $phys->as_float(), "Make sure clm5_0 correct float value" );
       print "\nSuccessfully ran all tests\n";
