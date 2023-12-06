@@ -171,7 +171,7 @@ contains
          wind_dependent_snow_density, snow_overburden_compaction_method, &
          lotmp_snowdensity_method, upplim_destruct_metamorph, &
          overburden_compress_Tfactor, min_wind_snowcompact, &
-         reset_snow, reset_snow_glc, reset_snow_glc_ela, zsno_nl
+         reset_snow, reset_snow_glc, reset_snow_glc_ela, zsno_nl, e_ice_nl
 
     ! Initialize options to default values, in case they are not specified in the namelist
     wind_dependent_snow_density = .false.
