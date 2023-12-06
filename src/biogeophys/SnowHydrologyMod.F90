@@ -22,7 +22,7 @@ module SnowHydrologyMod
   use abortutils      , only : endrun
   use clm_varpar      , only : nlevsno
   use clm_varctl      , only : iulog
-  use clm_varcon      , only : namec, h2osno_max, zsno
+  use clm_varcon      , only : namec, h2osno_max, zsno, e_ice
   use atm2lndType     , only : atm2lnd_type
   use AerosolMod      , only : aerosol_type
   use TemperatureType , only : temperature_type
@@ -111,6 +111,7 @@ module SnowHydrologyMod
   real(r8) :: overburden_compress_Tfactor = 0.08_r8            ! snow compaction overburden exponential factor (1/K)
   real(r8) :: min_wind_snowcompact        = 5._r8              ! minimum wind speed tht results in compaction (m/s)
   real(r8) :: zsno_nl                     = 0.0024_r8          ! roughness length for snow from namelist[m]
+  real(r8) :: e_ice_nl                    = 6.0                ! soil ice impedance factor
 
   ! ------------------------------------------------------------------------
   ! Parameters controlling the resetting of the snow pack
@@ -226,7 +227,8 @@ contains
             errMsg(sourcefile, __LINE__))
     end if
   
-  zsno=zsno_nl  
+  zsno=zsno_nl 
+  e_ice=e_ice_nl 
   end subroutine SnowHydrology_readnl
 
 
