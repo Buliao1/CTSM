@@ -38,6 +38,7 @@ module SoilHydrologyMod
 
   !-----------------------------------------------------------------------
   real(r8), private :: baseflow_scalar = 1.e-2_r8
+  real(r8) :: fff(c)_nl         = 0.5_r8     !
 
   character(len=*), parameter, private :: sourcefile = &
        __FILE__
@@ -69,7 +70,7 @@ contains
     character(len=*), parameter :: subname = 'soilHydReadNML'
     character(len=*), parameter :: nmlname = 'soilhydrology_inparm'
     !-----------------------------------------------------------------------
-    namelist /soilhydrology_inparm/ baseflow_scalar
+    namelist /soilhydrology_inparm/ baseflow_scalar, fff(c)_nl
 
     ! Initialize options to default values, in case they are not specified in
     ! the namelist
@@ -210,7 +211,7 @@ contains
 
       do fc = 1, num_hydrologyc
          c = filter_hydrologyc(fc)
-         fff(c) = 0.5_r8
+         fff(c) =  fff(c)_nl
          if (use_vichydro) then 
             top_moist(c) = 0._r8
             top_ice(c) = 0._r8
