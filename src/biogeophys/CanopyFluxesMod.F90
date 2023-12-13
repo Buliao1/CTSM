@@ -67,7 +67,7 @@ module CanopyFluxesMod
   logical, private :: snowveg_on     = .false.                ! snowveg_flag = 'ON'
   logical, private :: snowveg_onrad  = .true.                 ! snowveg_flag = 'ON_RAD'
   logical, private :: use_undercanopy_stability = .true.      ! use undercanopy stability term or not
-
+  real(r8) :: csoilc_nl                     = 0.004_r8        ! Drag coefficient for soil under dense canopy
   character(len=*), parameter, private :: sourcefile = &
        __FILE__
   !------------------------------------------------------------------------------
@@ -98,7 +98,7 @@ contains
     character(len=*), parameter :: nmlname = 'canopyfluxes_inparm'
     !-----------------------------------------------------------------------
 
-    namelist /canopyfluxes_inparm/ use_undercanopy_stability
+    namelist /canopyfluxes_inparm/ use_undercanopy_stability, csoilc_nl
 
     ! Initialize options to default values, in case they are not specified in
     ! the namelist
@@ -127,7 +127,8 @@ contains
        write(iulog,nml=canopyfluxes_inparm)
        write(iulog,*) ' '
     end if
-
+  
+  csoilc=csoilc_nl  
   end subroutine CanopyFluxesReadNML
 
   !------------------------------------------------------------------------------
