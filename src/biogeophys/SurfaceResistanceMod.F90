@@ -20,7 +20,8 @@ module SurfaceResistanceMod
   integer :: soil_resis_method   !choose the method for soil resistance calculation
   
   integer, parameter :: leepielke_1992 = 0 !
-  integer, parameter :: sl_14 = 1 
+  integer, parameter :: sl_14 = 1
+  real(r8) :: frac_sat_soil_dsl_init_nl     = 0.8_r8    ! Fraction of saturated soil for moisture value at which DSL initiates 
   
   !
   ! !PUBLIC MEMBER FUNCTIONS:
@@ -124,7 +125,7 @@ contains
     !-----------------------------------------------------------------------
 
 ! MUST agree with name in namelist and read statement
-    namelist /soil_resis_inparm/ soil_resis_method
+    namelist /soil_resis_inparm/ soil_resis_method , frac_sat_soil_dsl_init_nl
 
     ! Default values for namelist
 
