@@ -113,6 +113,7 @@ module SnowHydrologyMod
   real(r8) :: zsno_nl                     = 0.0024_r8          ! roughness length for snow from namelist[m]
   real(r8) :: e_ice_nl                    = 6.0                ! soil ice impedance factor
 
+
   ! ------------------------------------------------------------------------
   ! Parameters controlling the resetting of the snow pack
   ! ------------------------------------------------------------------------
