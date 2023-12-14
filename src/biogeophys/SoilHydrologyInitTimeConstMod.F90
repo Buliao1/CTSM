@@ -22,7 +22,6 @@ module SoilHydrologyInitTimeConstMod
   private :: initSoilParVIC    ! Convert default CLM soil properties to VIC parameters
   private :: initCLMVICMap     ! Initialize map from VIC to CLM layers
   private :: linear_interp     ! function for linear interperation 
-  real(r8) :: slopemax_nl                     = 0.4_r8          !Max topographic slope for microtopography pdf sigma 
   character(len=*), parameter, private :: sourcefile = &
        __FILE__
   !-----------------------------------------------------------------------

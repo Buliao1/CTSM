@@ -41,6 +41,7 @@ module initVerticalMod
   ! !PRIVATE MEMBER FUNCTIONS:
   private :: ReadNL
   private :: hasBedrock  ! true if the given column type includes bedrock layers
+  real(r8) :: slopemax_nl                     = 0.4_r8          ! Max topographic slope for microtopography pdf sigma
   !
 
   character(len=*), parameter, private :: sourcefile = &
@@ -77,7 +78,7 @@ contains
     character(len=*), parameter :: nl_name  = 'clm_inparm'  ! Namelist name
                                                                       
     ! MUST agree with name in namelist and read
-    namelist /clm_inparm/ use_bedrock
+    namelist /clm_inparm/ use_bedrock, slopemax_nl
 
     ! preset values
 
@@ -102,7 +103,7 @@ contains
     end if
 
     call shr_mpi_bcast(use_bedrock, mpicom)
-
+  
   end subroutine ReadNL
 
   !------------------------------------------------------------------------
@@ -724,7 +725,7 @@ contains
        ! microtopographic parameter, units are meters (try smooth function of slope)
 
        slopebeta = 3._r8
-       slopemax = 0.4_r8
+       slopemax = slopemax_nl
        slope0 = slopemax**(-1._r8/slopebeta)
        col%micro_sigma(c) = (col%topo_slope(c) + slope0)**(-slopebeta)
     end do
