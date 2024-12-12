@@ -128,7 +128,6 @@ contains
        write(iulog,*) ' '
     end if
   
-  csoilc=csoilc_nl  
   end subroutine CanopyFluxesReadNML
 
   !------------------------------------------------------------------------------
@@ -813,7 +812,7 @@ contains
             ri = ( grav*htop(p) * (taf(p) - t_grnd(c)) ) / (taf(p) * uaf(p) **2.00_r8)
 
             !! modify csoilc value (0.004) if the under-canopy is in stable condition
-
+            csoilc=csoilc_nl
             if (use_undercanopy_stability .and. (taf(p) - t_grnd(c) ) > 0._r8) then
                ! decrease the value of csoilc by dividing it with (1+gamma*min(S, 10.0))
                ! ria ("gmanna" in Sakaguchi&Zeng, 2008) is a constant (=0.5)

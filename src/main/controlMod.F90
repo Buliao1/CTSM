@@ -125,6 +125,7 @@ contains
     ! !LOCAL VARIABLES:
     integer :: i                    ! loop indices
     integer :: ierr                 ! error code
+    character(len=8) :: ierrstring
     integer :: unitn                ! unit for namelist file
     integer :: dtime                ! Integer time-step
     integer :: override_nsrest      ! If want to override the startup type sent from driver
@@ -302,13 +303,17 @@ contains
        write(iulog,*) 'Read in clm_inparm namelist from: ', trim(NLFilename)
        open( unitn, file=trim(NLFilename), status='old' )
        call shr_nl_find_group_name(unitn, 'clm_inparm', status=ierr)
+       write(ierrstring, '(I5.5)') ierr
        if (ierr == 0) then
           read(unitn, clm_inparm, iostat=ierr)
           if (ierr /= 0) then
-             call endrun(msg='ERROR reading clm_inparm namelist'//errMsg(sourcefile, __LINE__))
+             write(ierrstring, '(I5.5)') ierr
+             write(iulog,*) "Error trying to read clm_inparm, value for clm_inparm is:"
+             write(nml=clm_inparm, unit=iulog) 
+             call endrun(msg='error id '//ierrstring//'ERROR reading clm_inparm namelist'//errMsg(sourcefile, __LINE__))
           end if
        else
-          call endrun(msg='ERROR finding clm_inparm namelist'//errMsg(sourcefile, __LINE__))
+          call endrun(msg='error id '//ierrstring//' ERROR finding clm_inparm namelist'//errMsg(sourcefile, __LINE__))
        end if
        call shr_nl_find_group_name(unitn, 'clm_nitrogen', status=ierr)
        if (ierr == 0) then
